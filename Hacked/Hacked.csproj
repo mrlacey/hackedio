@@ -90,19 +90,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Accelerometer\AccelerometerHelper.cs" />
-    <Compile Include="Accelerometer\ApplicationSettingHelper.cs" />
-    <Compile Include="Accelerometer\Simple3DVector.cs" />
+    <Compile Include="Accelerometer\AccelerometerHelper.cs">
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Accelerometer\ApplicationSettingHelper.cs">
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Accelerometer\Simple3DVector.cs">
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\IntegerExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="RequestHelper.cs" />
     <Compile Include="ViewModels\HackedBaseViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HueColorConverter.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

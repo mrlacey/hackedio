@@ -13,8 +13,13 @@
         public XnaAsyncDispatcher(TimeSpan dispatchInterval)
         {
             this.frameworkDispatcherTimer = new DispatcherTimer();
-            this.frameworkDispatcherTimer.Tick += frameworkDispatcherTimer_Tick;
+            this.frameworkDispatcherTimer.Tick += FrameworkDispatcherTimerTick;
             this.frameworkDispatcherTimer.Interval = dispatchInterval;
+        }
+
+        public static void FrameworkDispatcherTimerTick(object sender, EventArgs e)
+        {
+            FrameworkDispatcher.Update();
         }
 
         void IApplicationService.StartService(ApplicationServiceContext context)
@@ -25,11 +30,6 @@
         void IApplicationService.StopService()
         {
             this.frameworkDispatcherTimer.Stop();
-        }
-
-        public static void frameworkDispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            FrameworkDispatcher.Update();
         }
     }
 }

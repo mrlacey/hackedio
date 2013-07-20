@@ -28,11 +28,11 @@
             {
                 int b = bytes[i];
                 chars[i * 2] = hexDigits[b >> 4];
+
                 chars[i * 2 + 1] = hexDigits[b & 0xF];
             }
 
             return new string(chars);
         }
-
     }
 }

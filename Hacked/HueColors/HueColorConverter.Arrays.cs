@@ -1,4 +1,4 @@
-﻿namespace Hacked.Views
+﻿namespace Hacked.HueColors
 {
     /// <summary>
     /// Used to convert colors between XY and RGB

@@ -26,10 +26,6 @@ namespace Hacked
         /// <exception cref="System.Exception">Invalid request</exception>
         public static void ExecuteRequest(string localpath, string body, Action<Exception, string> callback)
         {
-            //var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-
-            //string serialisedobject = JsonConvert.SerializeObject(body, settings);
-
             byte[] requestBody = System.Text.Encoding.UTF8.GetBytes(body);
 
             var url = "http://192.168.2.203/" + localpath;
@@ -68,9 +64,8 @@ namespace Hacked
         /// <param name="requestBody">The request body.</param>
         /// <param name="canRetry">if set to <c>true</c> the request can retry automatically if cancelled.</param>
         private static void MakeRequest(Action<Exception, string> callback, string url, byte[] requestBody, bool canRetry = true)
-
         {
-            var webRequest = WebRequest.Create(url);// + "?" + "method=" + method);
+            var webRequest = WebRequest.Create(url);
 
             if (url.Contains("state"))
             {
@@ -117,7 +112,6 @@ namespace Hacked
                                                             var resultString = tr.ReadToEnd();
 
                                                             System.Diagnostics.Debug.WriteLine("SERVER RETURNED :" + resultString);
-                                                            //var response = DeserializeJsonTo<T2>(resultString);
 
                                                             if (resultString != null)
                                                             {

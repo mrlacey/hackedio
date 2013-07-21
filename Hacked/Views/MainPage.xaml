@@ -50,11 +50,12 @@
                    Height="50"
                    Stretch="Uniform"
                    ImageOpened="ArtworkOpened"
-                   ImageFailed="ArtworkFailed" />
+                   ImageFailed="ArtworkFailed"
+                   DoubleTap="ImageDoubleTapped" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Ellipse x:Name="FakeBulb1" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="50" Stroke="Black" VerticalAlignment="Top" Width="50"/>
-            <Ellipse x:Name="FakeBulb2" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="50" Stroke="Black" VerticalAlignment="Top" Width="50" Margin="24,0"/>
-            <Ellipse x:Name="FakeBulb3" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="50" Stroke="Black" VerticalAlignment="Top" Width="50"/>
+                <Ellipse x:Name="FakeBulb1" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="50" Stroke="Black" VerticalAlignment="Top" Width="50"/>
+                <Ellipse x:Name="FakeBulb2" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="50" Stroke="Black" VerticalAlignment="Top" Width="50" Margin="24,0"/>
+                <Ellipse x:Name="FakeBulb3" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="50" Stroke="Black" VerticalAlignment="Top" Width="50"/>
             </StackPanel>
         </StackPanel>
 
@@ -64,11 +65,19 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <StackPanel>
-                <TextBox x:Name="BridgeIp" Text="192.168.2.203" />
-            <Button Tap="DoItTapped">do it</Button>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="BridgeIp" LostFocus="BridgeIpLostFocus" Text="192.168.2.203" />
+                    <Button Tap="ConnectTapped" Grid.Column="1">connect</Button>
+                    </Grid>
             <Button Content="set tempo" ManipulationStarted="TempoStarted" ManipulationCompleted="TempoCompleted" />
             </StackPanel>
-            <ListBox ItemsSource="{Binding}" Grid.Row="1">
+            <ListBox ItemsSource="{Binding}"
+                     Grid.Row="1"
+                     DoubleTap="ListDoubleTapped">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" TextWrapping="Wrap" />

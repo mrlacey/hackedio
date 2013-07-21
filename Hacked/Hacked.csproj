@@ -102,7 +102,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" >
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Extensions\HttpClientExtensions.cs" />
     <Compile Include="Extensions\IntegerExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="LocalizedStrings.cs" />
@@ -112,13 +115,13 @@
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HueColors\HueColorConverter.Arrays.cs" >
+    <Compile Include="HueColors\HueColorConverter.Arrays.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="HueColors\CGPoint.cs" >
+    <Compile Include="HueColors\CGPoint.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="HueColors\HueColorConverter.cs" >
+    <Compile Include="HueColors\HueColorConverter.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">

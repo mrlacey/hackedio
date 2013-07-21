@@ -20,15 +20,13 @@ namespace Hacked
         /// <summary>
         /// Executes the request.
         /// </summary>
-        /// <param name="localpath">The localpath.</param>
+        /// <param name="url">The URL.</param>
         /// <param name="body">The body.</param>
         /// <param name="callback">The callback.</param>
         /// <exception cref="System.Exception">Invalid request</exception>
-        public static void ExecuteRequest(string localpath, string body, Action<Exception, string> callback)
+        public static void ExecuteRequest(string url, string body, Action<Exception, string> callback)
         {
             byte[] requestBody = System.Text.Encoding.UTF8.GetBytes(body);
-
-            var url = "http://192.168.2.203/" + localpath;
 
             MakeRequest(callback, url, requestBody);
         }

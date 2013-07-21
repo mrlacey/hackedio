@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
+    using System.IO.IsolatedStorage;
     using System.Linq;
     using System.Net.Http;
     using System.Threading;
@@ -26,6 +27,8 @@
 
     public partial class MainPage : PhoneApplicationPage
     {
+        private const string IpStoreKey = "IpStoreKey";
+
         private readonly object delayLock = new object();
 
         private readonly object colorsLock = new object();
@@ -52,7 +55,14 @@
 
             AccelerometerHelper.Instance.ReadingChanged += this.AccelerometerReadingChanged;
 
-            // this.SetUpBridge();
+            try
+            {
+                this.BridgeIp.Text = IsolatedStorageSettings.ApplicationSettings[IpStoreKey].ToString();
+            }
+            catch (KeyNotFoundException)
+            {
+                // If have never saved setting previously the above will fail
+            }
 
             this.SetUpColorTimer();
         }
@@ -73,19 +83,18 @@
                         try
                         {
                             RequestHelper.ExecuteRequest(
-                                "api",
-                                "{\"devicetype\":\"test user\",\"username\":\"mrltestlightshow\"}",
+                                string.Format("http://{0}/api", this.BridgeIp.Text),
+                                "{\"devicetype\":\"LightShow\",\"username\":\"mrltestlightshow\"}",
                                 (exc, resp) =>
                                 {
-                                    this.ToDebugOut(exc != null ? exc.ToString() : "no error");
-                                    this.ToDebugOut("resp: " + resp);
+                                    this.ToDebugOut(exc != null ? exc.ToString() : resp);
 
                                     Dispatcher.BeginInvoke(
                                         async () =>
                                         {
                                             MessageBox.Show("press button");
 
-                                            var lights = await new HttpClient().GetStringAsync("http://192.168.2.203/api/mrltestlightshow/lights");
+                                            var lights = await new HttpClient().GetStringAsync("http://{0}/api/mrltestlightshow/lights", this.BridgeIp.Text);
 
                                             this.ToDebugOut("lights: " + lights);
                                         });
@@ -158,14 +167,17 @@
         {
             var cgp = HueColorConverter.XyFromColor(newColor.R, newColor.G, newColor.B);
 
+            var brightness = this.GetBrightness(newColor);
+
             RequestHelper.ExecuteRequest(
-                string.Format("api/mrltestlightshow/lights/{0}/state", bulbId),
-                "{\"on\":true, \"xy\":[" + cgp.X + "," + cgp.Y + "]}",
-                (exc, resp) =>
-                {
-                    this.ToDebugOut(exc != null ? exc.ToString() : "no error");
-                    this.ToDebugOut("resp: " + resp);
-                });
+                string.Format("http://{0}/api/mrltestlightshow/lights/{1}/state", this.BridgeIp.Text, bulbId),
+                "{\"on\":true, \"xy\":[" + cgp.X + "," + cgp.Y + "], \"bri\":" + brightness + "}",
+                (exc, resp) => this.ToDebugOut(exc != null ? exc.ToString() : resp));
+        }
+
+        private string GetBrightness(Color newColor)
+        {
+            return (((newColor.R + newColor.G + newColor.B) / 3) / 2).ToString();
         }
 
         private int GetCurrentDelay()
@@ -182,7 +194,7 @@
             {
                 if (this.currentDelay < 5000)
                 {
-                    this.currentDelay += 100;
+                    this.currentDelay += 200;
                     this.ToDebugOut("now slower");
                 }
             }
@@ -233,18 +245,13 @@
             });
         }
 
-        private void DoItTapped(object sender, GestureEventArgs e)
-        {
-            this.SetUpBridge();
-        }
-
         private async void LoadCurrentlyPlayingSong()
         {
             var activeSong = MediaPlayer.Queue.ActiveSong;
 
             if (activeSong == null)
             {
-                this.ToDebugOut("no song playing");
+                this.ToDebugOut("no song detected");
 
                 await Task.Delay(10.Seconds());
                 this.LoadCurrentlyPlayingSong();
@@ -328,7 +335,22 @@
             }
             else
             {
-                this.ToDebugOut("no artwork");
+                if (MediaPlayer.Queue.ActiveSong.Album.HasArt)
+                {
+                    this.ToDebugOut("artwork from zune");
+                    Dispatcher.BeginInvoke(() =>
+                        {
+                            var streamSource = new BitmapImage();
+                            streamSource.SetSource(MediaPlayer.Queue.ActiveSong.Album.GetThumbnail());
+
+                            this.ArtworkImage.Source = streamSource;
+                        });
+                   
+                }
+                else
+                {
+                    this.ToDebugOut("no artwork");
+                }
             }
         }
 
@@ -398,6 +420,37 @@
         {
             this.ToDebugOut("TempoCompleted");
             AccelerometerHelper.Instance.Active = false;
+        }
+
+        private void ConnectTapped(object sender, GestureEventArgs e)
+        {
+            this.SetUpBridge();
+        }
+
+        private void BridgeIpLostFocus(object sender, RoutedEventArgs e)
+        {
+            var settings = IsolatedStorageSettings.ApplicationSettings;
+
+            if (settings.Contains(IpStoreKey))
+            {
+                settings[IpStoreKey] = this.BridgeIp.Text;
+            }
+            else
+            {
+                settings.Add(IpStoreKey, this.BridgeIp.Text);
+            }
+
+            settings.Save();
+        }
+
+        private void ImageDoubleTapped(object sender, GestureEventArgs e)
+        {
+            this.LoadCurrentlyPlayingSong();
+        }
+
+        private void ListDoubleTapped(object sender, GestureEventArgs e)
+        {
+            this.debugOut.Clear();
         }
     }
 }

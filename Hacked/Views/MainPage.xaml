@@ -41,21 +41,39 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="LIGHT SHOW"
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,10,0,24">
+            <TextBlock Text="HUESICAL LIGHTS"
                        Style="{StaticResource PhoneTextNormalStyle}"
                        FontWeight="SemiBold"
-                       Margin="12,0,12,160"/>
-            <Image x:Name="ArtworkImage"
+                       Margin="12,0,12,24"/>
+            <Grid Height="100" Margin="24,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="ArtworkImage"
                    Height="50"
+                   Width="50"
                    Stretch="Uniform"
                    ImageOpened="ArtworkOpened"
                    ImageFailed="ArtworkFailed"
-                   DoubleTap="ImageDoubleTapped" />
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Ellipse x:Name="FakeBulb1" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="50" Stroke="Black" VerticalAlignment="Top" Width="50"/>
-                <Ellipse x:Name="FakeBulb2" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="50" Stroke="Black" VerticalAlignment="Top" Width="50" Margin="24,0"/>
-                <Ellipse x:Name="FakeBulb3" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="50" Stroke="Black" VerticalAlignment="Top" Width="50"/>
+                   DoubleTap="ImageDoubleTapped" RenderTransformOrigin="0.79,0.5" Grid.Column="0" Margin="20,25,37,25" >
+                    <Image.RenderTransform>
+                        <CompositeTransform ScaleX="2" ScaleY="2" TranslateX="14.5"/>
+                    </Image.RenderTransform>
+                    <!--<Image.Source>
+                        <BitmapImage UriSource="http://4.musicimg.ovi.com/u/1.0/image/28064907?w=50&amp;q=40"></BitmapImage>
+                    </Image.Source>-->
+                </Image>
+                <StackPanel Grid.Column="1">
+                    <TextBlock x:Name="ArtistName" Style="{StaticResource PhoneTextGroupHeaderStyle}" Margin="0,-10,0,0" />
+                    <TextBlock x:Name="AlbumTitle" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
+                </StackPanel>
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
+                <Ellipse x:Name="FakeBulb1" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="80" Stroke="Black" VerticalAlignment="Top" Width="80"/>
+                <Ellipse x:Name="FakeBulb2" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="80" Stroke="Black" VerticalAlignment="Top" Width="80" Margin="36,0"/>
+                <Ellipse x:Name="FakeBulb3" Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="80" Stroke="Black" VerticalAlignment="Top" Width="80"/>
             </StackPanel>
         </StackPanel>
 
@@ -72,12 +90,24 @@
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="BridgeIp" LostFocus="BridgeIpLostFocus" Text="192.168.2.203" />
                     <Button Tap="ConnectTapped" Grid.Column="1">connect</Button>
-                    </Grid>
-            <Button Content="set tempo" ManipulationStarted="TempoStarted" ManipulationCompleted="TempoCompleted" />
+                </Grid>
+                <Button ManipulationStarted="TempoStarted" ManipulationCompleted="TempoCompleted" BorderThickness="0" >
+
+                    <Canvas x:Name="noun_project_1376"
+                HorizontalAlignment="Left"
+                Height="78.099197"
+                UseLayoutRounding="False"
+                VerticalAlignment="Top"
+                Width="51.339203"
+                Margin="24">
+                        <Path Data="F1M13.188,35.828L9.664,37.324 11.215,31.183z M0,75.523L9.66,37.34 13.871,42.137 11.836,50.187 20.34,50.187 17.332,43.101 16.375,43.508 11.273,37.699 14.465,36.344 3.613,10.781C3.363,10.191,4.246,9.816,4.496,10.406L15.348,35.969 18.539,34.613 19.176,42.32 18.215,42.726 21.383,50.187 22.898,50.187 22.898,11.769 28.547,11.769 28.547,13.488 26.008,13.488 26.008,14.445 28.547,14.445 28.547,18.281 26.008,18.281 26.008,19.242 28.547,19.242 28.547,23.078 26.008,23.078 26.008,24.039 28.547,24.039 28.547,27.875 26.008,27.875 26.008,28.832 28.547,28.832 28.547,32.672 26.008,32.672 26.008,33.629 28.547,33.629 28.547,37.465 26.008,37.465 26.008,38.426 28.547,38.426 28.547,42.262 26.008,42.262 26.008,43.222 28.547,43.222 28.547,50.187 39.613,50.187 29.68,10.91 21.77,10.91 15.797,34.527 12.398,26.515 17.969,4.492 25.668,0 33.371,4.492 51.34,75.523 47.379,75.523 47.379,76.5C47.379,77.387,46.664,78.097,45.781,78.097L45.492,78.097C44.609,78.097,43.895,77.383,43.895,76.5L43.895,75.523 7.445,75.523 7.445,76.5C7.445,77.387,6.73,78.097,5.848,78.097L5.559,78.097C4.676,78.097,3.961,77.383,3.961,76.5L3.961,75.523z" Fill="White" Height="78.097" Canvas.Left="0" Canvas.Top="-0.099" Width="51.34"/>
+                    </Canvas>
+                </Button>
             </StackPanel>
             <ListBox ItemsSource="{Binding}"
                      Grid.Row="1"
-                     DoubleTap="ListDoubleTapped">
+                     DoubleTap="ListDoubleTapped"
+                     Opacity="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" TextWrapping="Wrap" />

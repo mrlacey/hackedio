@@ -303,6 +303,13 @@
                                             artist.Thumb100Uri,
                                             artist.Thumb200Uri,
                                             artist.Thumb320Uri);
+
+                                        Dispatcher.BeginInvoke(
+                                            () =>
+                                            {
+                                                this.ArtistName.Text = activeSong.Artist.Name;
+                                                this.AlbumTitle.Text = activeSong.Album.Name;
+                                            });
                                     }
                                     else
                                     {
@@ -311,6 +318,13 @@
                                             artist.Thumb100Uri,
                                             artist.Thumb200Uri,
                                             artist.Thumb320Uri);
+
+                                        Dispatcher.BeginInvoke(
+                                            () =>
+                                                {
+                                                    this.ArtistName.Text = activeSong.Artist.Name;
+                                                    this.AlbumTitle.Text = activeSong.Album.Name;
+                                                });
                                     }
                                 },
                                 artist,

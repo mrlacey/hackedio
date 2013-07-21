@@ -20,13 +20,18 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="HUESICAL LIGHTS" Style="{StaticResource PhoneTextNormalStyle}" FontWeight="SemiBold"/>
             <TextBlock Text="about" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel>
                 <TextBlock Text="Version X.Y" x:Name="DisplayedVersion" Margin="12,0,12,12" Tap="VersionTapped" />
+                
+                <!--
+                
+                <a href="http://thenounproject.com/noun/metronome/#icon-No1376" target="_blank">Metronome</a> designed by <a href="http://thenounproject.com/Simon Child" target="_blank">Simon Child</a> from The Noun Project
+                -->
                 
             </StackPanel>
         </Grid>

@@ -2,6 +2,7 @@
 {
     /// <summary>
     /// Internal helper class, holds XY
+    /// Originally from https://github.com/Q42/Q42.HueApi
     /// </summary>
     internal class CGPoint
     {

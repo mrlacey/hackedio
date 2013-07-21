@@ -5,6 +5,7 @@
     /// <summary>
     /// Used to convert colors between XY and RGB
     /// internal: Do not expose
+    /// Originally from https://github.com/Q42/Q42.HueApi
     /// </summary>
     internal static partial class HueColorConverter
     {
